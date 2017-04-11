@@ -324,9 +324,17 @@
       
         
           
-            <h4 id="0x01-通过getResourceAsStream获得"><a href="#0x01-通过getResourceAsStream获得" class="headerlink" title="0x01 通过getResourceAsStream获得"></a>0x01 通过<code>getResourceAsStream</code>获得</h4><figure class="highlight plain"><figcaption><span>is=this.getClass().getResourceAsStream("resourceName");```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&gt; 这种方法可以获得到InputStream</div><div class="line"></div><div class="line">#### 0x02 通过`getResource`获得</div><div class="line">```URL url = this.getClass().getClassLoader().getResource(&quot;resourceName&quot;);</div></pre></td></tr></table></figure>
+            <h4 id="0x01-通过getResourceAsStream获得"><a href="#0x01-通过getResourceAsStream获得" class="headerlink" title="0x01 通过getResourceAsStream获得"></a>0x01 通过<code>getResourceAsStream</code>获得</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">InputStream is=this.getClass().getResourceAsStream(&quot;resourceName&quot;);</div></pre></td></tr></table></figure>
 <blockquote>
-<p>这种方法可以获得文件对应的URL，内容如下：<br><code>jar:file:/Users/gix/Documents/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/projectName/WEB-INF/lib/jarName.jar!/resourceName</code><br>得到URL之后就可以使用<code>url.getFile()</code>方法获得其它资源对象</p>
+<p>这种方法可以获得到InputStream</p>
+</blockquote>
+<h4 id="0x02-通过getResource获得"><a href="#0x02-通过getResource获得" class="headerlink" title="0x02 通过getResource获得"></a>0x02 通过<code>getResource</code>获得</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">URL url = this.getClass().getClassLoader().getResource(&quot;resourceName&quot;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>这种方法可以获得文件对应的URL，内容如下：</p>
+</blockquote>
+<pre><code>jar:file:/Users/gix/Documents/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/projectName/WEB-INF/lib/jarName.jar!/resourceName
+</code></pre><blockquote>
+<p>得到URL之后就可以使用<code>url.getFile()</code>方法获得其它资源对象</p>
 </blockquote>
 
           
