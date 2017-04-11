@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="java,jar," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -87,16 +87,12 @@
 
 
 
-<meta name="description" content="0x01 通过getResourceAsStream获得is=this.getClass().getResourceAsStream(&quot;resourceName&quot;);```12345&amp;gt; 这种方法可以获得到InputStream#### 0x02 通过`getResource`获得```URL url = this.getClass().getClassLoader().getResource">
-<meta property="og:type" content="article">
-<meta property="og:title" content="java加载jar中资源文件">
-<meta property="og:url" content="https://fr1d4st.github.io/2017/04/11/java加载jar中资源文件/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fr1d4st Blog">
+<meta property="og:url" content="https://fr1d4st.github.io/tags/jar/index.html">
 <meta property="og:site_name" content="Fr1d4st Blog">
-<meta property="og:description" content="0x01 通过getResourceAsStream获得is=this.getClass().getResourceAsStream(&quot;resourceName&quot;);```12345&amp;gt; 这种方法可以获得到InputStream#### 0x02 通过`getResource`获得```URL url = this.getClass().getClassLoader().getResource">
-<meta property="og:updated_time" content="2017-04-11T11:01:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java加载jar中资源文件">
-<meta name="twitter:description" content="0x01 通过getResourceAsStream获得is=this.getClass().getResourceAsStream(&quot;resourceName&quot;);```12345&amp;gt; 这种方法可以获得到InputStream#### 0x02 通过`getResource`获得```URL url = this.getClass().getClassLoader().getResource">
+<meta name="twitter:title" content="Fr1d4st Blog">
 
 
 
@@ -124,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://fr1d4st.github.io/2017/04/11/java加载jar中资源文件/"/>
+  <link rel="canonical" href="https://fr1d4st.github.io/tags/jar/"/>
 
 
 
 
 
-  <title> java加载jar中资源文件 | Fr1d4st Blog </title>
+  <title> 标签: jar | Fr1d4st Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -155,7 +151,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -239,166 +235,46 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://fr1d4st.github.io/2017/04/11/java加载jar中资源文件/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fr1d4st">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fr1d4st Blog">
-    </span>
+  <div id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        jar
+        <small>标签</small>
+      </h2>
+    </div>
 
     
-      <header class="post-header">
+      
 
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
+            <a class="post-title-link" href="/2017/04/11/java加载jar中资源文件/" itemprop="url">
               
-                java加载jar中资源文件
+                <span itemprop="name">java加载jar中资源文件</span>
               
-            
-          </h1>
+            </a>
         
+      </h1>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T18:42:15+08:00">
-                2017-04-11
-              </time>
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-04-11T18:42:15+08:00"
+              content="2017-04-11" >
+          04-11
+        </time>
+      </div>
 
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
-            </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h4 id="0x01-通过getResourceAsStream获得"><a href="#0x01-通过getResourceAsStream获得" class="headerlink" title="0x01 通过getResourceAsStream获得"></a>0x01 通过<code>getResourceAsStream</code>获得</h4><figure class="highlight plain"><figcaption><span>is=this.getClass().getResourceAsStream("resourceName");```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&gt; 这种方法可以获得到InputStream</div><div class="line"></div><div class="line">#### 0x02 通过`getResource`获得</div><div class="line">```URL url = this.getClass().getClassLoader().getResource(&quot;resourceName&quot;);</div></pre></td></tr></table></figure>
-<blockquote>
-<p>这种方法可以获得文件对应的URL，内容如下：<br><code>jar:file:/Users/gix/Documents/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/projectName/WEB-INF/lib/jarName.jar!/resourceName</code><br>得到URL之后就可以使用<code>url.getFile()</code>方法获得其它资源对象</p>
-</blockquote>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/java/" rel="tag"># java</a>
-          
-            <a href="/tags/jar/" rel="tag"># jar</a>
-          
-        </div>
-      
-
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/04/11/maven生成带依赖的jar包/" rel="next" title="maven生成带依赖的jar包">
-                <i class="fa fa-chevron-left"></i> maven生成带依赖的jar包
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
-      
-    </div>
+    
   </div>
+
+  
 
 
           </div>
@@ -406,10 +282,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -429,17 +301,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -492,22 +355,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#0x01-通过getResourceAsStream获得"><span class="nav-number">1.</span> <span class="nav-text">0x01 通过getResourceAsStream获得</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -635,10 +482,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
 
   
 
