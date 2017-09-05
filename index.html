@@ -247,6 +247,178 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://fr1d4st.github.io/2017/09/05/java动态代理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr1d4st">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fr1d4st Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/05/java动态代理/" itemprop="url">
+                  java动态代理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T14:29:13+08:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="java中的动态代理"><a href="#java中的动态代理" class="headerlink" title="java中的动态代理"></a>java中的动态代理</h3><p>java中的动态代理主要有3种：</p>
+<ul>
+<li>AspectJ  </li>
+<li>JDK动态代理  </li>
+<li>CGLIB</li>
+</ul>
+<p><em>AspectJ通过在编译时织入代码来增强接口或类的功能，<code>不属于java的语法</code></em></p>
+<p>三种代理区别：</p>
+<table>
+<thead>
+<tr>
+<th>动态代理</th>
+<th>代理模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AspectJ</td>
+<td>编译时增强</td>
+</tr>
+<tr>
+<td>JDK</td>
+<td>运行时增强，主要面向接口</td>
+</tr>
+<tr>
+<td>CGLIB</td>
+<td>运行时增强，主要面向类</td>
+</tr>
+</tbody>
+</table>
+<p>SpringAOP中的代理：</p>
+<table>
+<thead>
+<tr>
+<th>动态代理</th>
+<th>配置方式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AspectJ</td>
+<td><code>&lt;aop:aspectj-autoproxy/&gt;</code></td>
+<td>SpringAOP中的AspectJ只是利用JDK动态代理对AspectJ的一种实现，并没有使用AspectJ，动态代理对象必须实现一个或多个接口。</td>
+</tr>
+<tr>
+<td>CGLIB</td>
+<td><code>&lt;aop:aspectj-autoproxy proxy-target-class=&quot;true&quot;/&gt;</code></td>
+<td>使用CGLIB作为动态代理时，会生成<code>$$EnhancerByCGLIB$$</code>这样的类。</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://fr1d4st.github.io/2017/09/05/对设计模式六大原则的理解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1086,7 +1258,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
