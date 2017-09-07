@@ -115,7 +115,7 @@ Tomcat 7.x
 JAVA7
 
 0x01 tomcat运行模式&amp;emsp;&amp;emsp;对于一般个人用户来说，tomcat启用Https可以通过jvm提供的keytool工具来生成.keyst">
-<meta property="og:updated_time" content="2017-09-07T14:40:03.000Z">
+<meta property="og:updated_time" content="2017-09-07T14:48:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS启用APR+Https">
 <meta name="twitter:description" content="0x00 背景&amp;emsp;&amp;emsp;最近我司一项目tomcat需要全站Https，客户提供了2个文件：
@@ -413,10 +413,17 @@ JAVA7
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># yum -y install libexpat1-dev</div></pre></td></tr></table></figure>
 <p><strong>安装apr-util</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># wget http://ftp.mirror.tw/pub/apache/apr/apr-util-1.6.0.tar.gz</div><div class="line"># tar -xzvf apr-util-1.6.0.tar.gz</div><div class="line"># cd apr-util-1.6.0</div><div class="line"># ./configure --prefix=/usr/local/apr-util --with-apr=/usr/local/apr</div><div class="line"># make</div><div class="line"># make install</div></pre></td></tr></table></figure>
-<h3 id="0x03-Tomcat启用APR-Https"><a href="#0x03-Tomcat启用APR-Https" class="headerlink" title="0x03 Tomcat启用APR+Https"></a>0x03 Tomcat启用APR+Https</h3><p>&emsp;&emsp;<code>CentOS</code>自带<code>openssl</code>，但是版本太低<code>openssl-1.0.1</code>，无法使用，需要重新安装<code>openssl-1.0.2</code></p>
+<h3 id="0x03-Tomcat启用APR-Https"><a href="#0x03-Tomcat启用APR-Https" class="headerlink" title="0x03 Tomcat启用APR+Https"></a>0x03 Tomcat启用APR+Https</h3><p>&emsp;&emsp;<code>CentOS</code>自带<code>openssl</code>，但是版本太低<code>openssl-1.0.1</code>，无法使用，需要重新安装<code>openssl-1.0.2</code>，目前最新版本是<code>openssl-1.0.2l</code></p>
 <p><strong>安装opensl</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># wget https://www.openssl.org/source/openssl-1.0.2l.tar.gz</div><div class="line"># tar -xzvf openssl-1.0.2l.tar.gz</div><div class="line"># cd openssl-1.0.2l</div><div class="line"># ./config --prefix=/usr/local/openssl</div><div class="line"># make</div><div class="line"># make install</div><div class="line"># ln -s /usr/local/openssl/bin/openssl /usr/bin/openssl # 覆盖系统自带openssl软链接</div><div class="line"># openssl version</div></pre></td></tr></table></figure>
-<p><strong>编辑server.xml</strong></p>
+<p><strong>安装<code>tomcat native</code></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#tar -zxf tomcat-native.tar.gz</div><div class="line">#cd tomcat-native-v-src/native/</div><div class="line">#./configure --with-apr=/usr/local/apr --with-java-home=/path/to/jdk --with-ssl=/usr/local/openssl</div><div class="line">#make</div><div class="line">#make install</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Tomcat Native：这个项目可以让 Tomcat 使用 Apache 的 apr 包来处理包括文件和网络IO操作，以提升性能。</p>
+<p>官网介绍：<br>The Apache Tomcat Native Library is an optional component for use with Apache Tomcat that allows<br>Tomcat to use certain native resources for performance, compatibility, etc.<br>（大概意思是Tomcat可以利用一些native资源来提高性能和兼容性。）</p>
+<p>Specifically, the Apache Tomcat Native Library gives Tomcat access to the Apache Portable Runtime<br>(APR) library’s network connection (socket) implementation and random-number generator.<br>（具体来说是利用了APR库中的网络连接实现和随机数生成器。）</p>
+</blockquote>
+<p><strong>配置server.xml</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># vi /path/to/tomcat/conf/server.xml</div></pre></td></tr></table></figure>
 <p><strong>注释掉</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</div><div class="line">connectionTimeout=&quot;20000&quot;</div><div class="line">redirectPort=&quot;8443&quot; /&gt;</div></pre></td></tr></table></figure>
