@@ -247,6 +247,193 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://fr1d4st.github.io/2017/09/07/CentOS启用APR-Https/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr1d4st">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fr1d4st Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/07/CentOS启用APR-Https/" itemprop="url">
+                  CentOS启用APR+Https
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T19:46:21+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="0x00-背景"><a href="#0x00-背景" class="headerlink" title="0x00 背景"></a>0x00 背景</h3><p>&emsp;&emsp;最近我司一项目<code>tomcat</code>需要全站<code>Https</code>，客户提供了2个文件：</p>
+<ul>
+<li>xxx.crt</li>
+<li>xxx.key</li>
+</ul>
+<p>系统运行环境：</p>
+<ul>
+<li>CentOS 6.x</li>
+<li>Tomcat 7.x</li>
+<li>JAVA7</li>
+</ul>
+<h3 id="0x01-tomcat运行模式"><a href="#0x01-tomcat运行模式" class="headerlink" title="0x01 tomcat运行模式"></a>0x01 tomcat运行模式</h3><p>&emsp;&emsp;对于一般个人用户来说，<code>tomcat</code>启用<code>Https</code>可以通过<code>jvm</code>提供的<code>keytool</code>工具来生成<code>.keystore</code>文件，然后在<code>tomcat</code>中配置<code>keystoreFile</code>和<code>keystorePass</code>，<code>keytool</code>位于<code>/path/to/JDK/jre/lib/security/</code>目录。但是自己生成的证书文件，浏览器是不认可的。所以，自己生产证书文件并配置的<code>Https</code>在浏览器中会显示<strong>站点连接不可信</strong>，并有红色反斜杠标志，没有我们希望得到的保护色的漂亮<code>Https</code>标志。</p>
+<p>&emsp;&emsp;由于我们客户是提供了证书文件，而且用户希望看到保护色的漂亮标志，因此，我们必须利用客户提供的文件来启用全站<code>Https</code>。</p>
+<p>&emsp;&emsp;<code>tomcat</code>有3种运行模式，如下：</p>
+<table>
+<thead>
+<tr>
+<th>运行模式</th>
+<th>protocol</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BIO</td>
+<td><code>org.apache.coyote.http11.Http11Protocol</code></td>
+<td>阻塞式I/O，<code>tomcat8</code>一下默认启用模式。</td>
+</tr>
+<tr>
+<td>NIO</td>
+<td><code>org.apache.coyote.http11.Http11NioProtocol</code></td>
+<td>非阻塞式I/O，通过JDK提供的<code>java.nio.*</code>实现，<code>tomcat8</code>默认启用模式。</td>
+</tr>
+<tr>
+<td>APR</td>
+<td><code>org.apache.coyote.http11.Http11AprProtocol</code></td>
+<td>非阻塞式I/O，通过系统级类库<code>APR</code>实现，性能最高，默认不启用。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>APR：Apache Portable Run-time libraries，Apache可移植运行库<br>在早期的Apache版本中，应用程序本身必须能够处理各种具体操作系统平台的细节，并针对不同的平台调用不同的处理函数。随着Apache的进一步开发，Apache组织决定将这些通用的函数独立出来并发展成为一个新的项目。这样，APR的开发就从Apache中独立出来，Apache仅仅是使用APR而已。</p>
+</blockquote>
+<p>&emsp;&emsp;在这三种模式中，<code>Https</code>的配置还不一样，BIO和NIO模式使用<code>keystoreFile</code>和<code>keystorePass</code>来配置，而APR模式中使用<code>SSLCertificateFile</code>和<code>SSLCertificateKeyFile</code>来配置。由于客户提供给我们的是<code>.crt</code>文件，而不是<code>.keystore</code>文件，因此我们只能使用APR模式。</p>
+<h3 id="0x02-CentOS安装APR"><a href="#0x02-CentOS安装APR" class="headerlink" title="0x02 CentOS安装APR"></a>0x02 CentOS安装APR</h3><p>&emsp;&emsp;Centos中默认是安装APR软件包的，我们可以通过<code>rpm -qa | grep apr</code>查看，但是系统自带的版本太低，需要手动安装新版本。</p>
+<p>&emsp;&emsp;从<a href="http://ftp.mirror.tw/pub/apache/apr/" target="_blank" rel="external">这个地址</a>下载<code>apr</code>和<code>apr-util</code>包并安装：</p>
+<p><strong>安装apr</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># wget http://ftp.mirror.tw/pub/apache/apr/apr-1.6.2.tar.gz</div><div class="line"># tar -xzvf apr-1.6.2.tar.gz</div><div class="line"># cd apr-1.6.2</div><div class="line"># ./configure --prefix=/usr/local/apr</div><div class="line"># make</div><div class="line"># make install</div></pre></td></tr></table></figure>
+<p><strong>设置环境变量</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#vi /etc/profile   </div><div class="line"># 在文本的最后面添加以下内容</div><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/apr/lib   </div><div class="line"># source /etc/profile #使profile生效</div></pre></td></tr></table></figure>
+<p><strong>安装expat开发库，否则安装apr-util时会报<code>xml/apr_xml.c:35:19: error: expat.h: No such file or directory</code>错误</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># yum -y install libexpat1-dev</div></pre></td></tr></table></figure>
+<p><strong>安装apr-util</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># wget http://ftp.mirror.tw/pub/apache/apr/apr-util-1.6.0.tar.gz</div><div class="line"># tar -xzvf apr-util-1.6.0.tar.gz</div><div class="line"># cd apr-util-1.6.0</div><div class="line"># ./configure --prefix=/usr/local/apr-util --with-apr=/usr/local/apr</div><div class="line"># make</div><div class="line"># make install</div></pre></td></tr></table></figure>
+<h3 id="0x03-Tomcat启用APR-Https"><a href="#0x03-Tomcat启用APR-Https" class="headerlink" title="0x03 Tomcat启用APR+Https"></a>0x03 Tomcat启用APR+Https</h3><p>&emsp;&emsp;<code>CentOS</code>自带<code>openssl</code>，但是版本太低<code>openssl-1.0.1</code>，无法使用，需要重新安装<code>openssl-1.0.2</code></p>
+<p><strong>安装opensl</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># wget https://www.openssl.org/source/openssl-1.0.2l.tar.gz</div><div class="line"># tar -xzvf openssl-1.0.2l.tar.gz</div><div class="line"># cd openssl-1.0.2l</div><div class="line"># ./config --prefix=/usr/local/openssl</div><div class="line"># make</div><div class="line"># make install</div><div class="line"># ln -s /usr/local/openssl/bin/openssl /usr/bin/openssl # 覆盖系统自带openssl软链接</div><div class="line"># openssl version</div></pre></td></tr></table></figure>
+<p><strong>编辑server.xml</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># vi /path/to/tomcat/conf/server.xml</div></pre></td></tr></table></figure>
+<p><strong>注释掉</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</div><div class="line">connectionTimeout=&quot;20000&quot;</div><div class="line">redirectPort=&quot;8443&quot; /&gt;</div></pre></td></tr></table></figure>
+<p><strong>添加</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;org.apache.coyote.http11.Http11AprProtocol&quot;</div><div class="line">		   scheme=&quot;https&quot; secure=&quot;true&quot; SSLEnabled=&quot;true&quot;  </div><div class="line">          SSLCertificateFile=&quot;/path/to/xxx.crt&quot;  </div><div class="line">          SSLCertificateKeyFile=&quot;/path/to/xxx.key&quot;  </div><div class="line">          SSLProtocol=&quot;TLSv1+TLSv1.1+TLSv1.2&quot; </div><div class="line">          redirectPort=&quot;443&quot;/&gt;</div></pre></td></tr></table></figure>
+<p>至此，我们的<code>tomcat</code>就可以使用浏览器保护色<code>Https</code>了。需要<code>Http</code>自动跳转到<code>Https</code>还需要如下配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># vi /path/to/tomcat/conf/web.xml</div><div class="line"># 在最后加入</div><div class="line">&lt;security-constraint&gt;</div><div class="line">	&lt;!-- Authorization setting for SSL --&gt;</div><div class="line">	&lt;web-resource-collection&gt;</div><div class="line">		&lt;web-resource-name &gt;SSL&lt;/web-resource-name&gt;</div><div class="line">		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">	&lt;/web-resource-collection&gt;</div><div class="line">	&lt;user-data-constraint&gt;</div><div class="line">		&lt;transport-guarantee&gt;CONFIDENTIAL&lt;/transport-guarantee&gt;</div><div class="line">	&lt;/user-data-constraint&gt;</div><div class="line">&lt;/security-constraint&gt;</div></pre></td></tr></table></figure>
+<p>这样，每次访问网站时就可以自动跳转到浏览器保护色的<code>https</code>了。</p>
+<p>—-end—-</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://fr1d4st.github.io/2017/09/05/java动态代理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1258,7 +1445,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1271,7 +1458,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
