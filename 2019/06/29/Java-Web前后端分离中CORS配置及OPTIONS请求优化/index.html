@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="cors,">
 
 
 
@@ -87,13 +87,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Fr1d4st Blog">
-<meta property="og:url" content="https://fr1d4st.github.io/index.html">
+<meta name="description" content="Java Web前后端分离中CORS配置及OPTIONS请求优化0x00 CORS 概述 跨域资源共享(CORS) 是一种机制，它使用额外的 HTTP 头来告诉浏览器  让运行在一个 origin (domain) 上的Web应用被准许访问来自不同源服务器上的指定的资源。当一个资源从与该资源本身所在的服务器不同的域、协议或端口请求一个资源时，资源会发起一个跨域 HTTP 请求。 跨域资源共享（ C">
+<meta name="keywords" content="cors">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Web前后端分离中CORS配置及OPTIONS请求优化">
+<meta property="og:url" content="https://fr1d4st.github.io/2019/06/29/Java-Web前后端分离中CORS配置及OPTIONS请求优化/index.html">
 <meta property="og:site_name" content="Fr1d4st Blog">
+<meta property="og:description" content="Java Web前后端分离中CORS配置及OPTIONS请求优化0x00 CORS 概述 跨域资源共享(CORS) 是一种机制，它使用额外的 HTTP 头来告诉浏览器  让运行在一个 origin (domain) 上的Web应用被准许访问来自不同源服务器上的指定的资源。当一个资源从与该资源本身所在的服务器不同的域、协议或端口请求一个资源时，资源会发起一个跨域 HTTP 请求。 跨域资源共享（ C">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-29T08:18:41.133Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Fr1d4st Blog">
+<meta name="twitter:title" content="Java Web前后端分离中CORS配置及OPTIONS请求优化">
+<meta name="twitter:description" content="Java Web前后端分离中CORS配置及OPTIONS请求优化0x00 CORS 概述 跨域资源共享(CORS) 是一种机制，它使用额外的 HTTP 头来告诉浏览器  让运行在一个 origin (domain) 上的Web应用被准许访问来自不同源服务器上的指定的资源。当一个资源从与该资源本身所在的服务器不同的域、协议或端口请求一个资源时，资源会发起一个跨域 HTTP 请求。 跨域资源共享（ C">
 
 
 
@@ -121,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://fr1d4st.github.io/">
+  <link rel="canonical" href="https://fr1d4st.github.io/2019/06/29/Java-Web前后端分离中CORS配置及OPTIONS请求优化/">
 
 
 
 
 
-  <title> Fr1d4st Blog </title>
+  <title> Java Web前后端分离中CORS配置及OPTIONS请求优化 | Fr1d4st Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -152,9 +157,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -237,9 +240,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -269,10 +272,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2019/06/29/Java-Web前后端分离中CORS配置及OPTIONS请求优化/" itemprop="url">
-                  Java Web前后端分离中CORS配置及OPTIONS请求优化
-                </a>
+                Java Web前后端分离中CORS配置及OPTIONS请求优化
               
             
           </h1>
@@ -307,6 +307,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
 
           
 
@@ -323,9 +328,7 @@
       
 
       
-        
-          
-            <h1 id="Java-Web前后端分离中CORS配置及OPTIONS请求优化"><a href="#Java-Web前后端分离中CORS配置及OPTIONS请求优化" class="headerlink" title="Java Web前后端分离中CORS配置及OPTIONS请求优化"></a>Java Web前后端分离中CORS配置及OPTIONS请求优化</h1><h2 id="0x00-CORS-概述"><a href="#0x00-CORS-概述" class="headerlink" title="0x00 CORS 概述"></a>0x00 CORS 概述</h2><blockquote>
+        <h1 id="Java-Web前后端分离中CORS配置及OPTIONS请求优化"><a href="#Java-Web前后端分离中CORS配置及OPTIONS请求优化" class="headerlink" title="Java Web前后端分离中CORS配置及OPTIONS请求优化"></a>Java Web前后端分离中CORS配置及OPTIONS请求优化</h1><h2 id="0x00-CORS-概述"><a href="#0x00-CORS-概述" class="headerlink" title="0x00 CORS 概述"></a>0x00 CORS 概述</h2><blockquote>
 <p>跨域资源共享(<a href="https://developer.mozilla.org/en-US/docs/Glossary/CORS" target="_blank" rel="noopener">CORS</a>) 是一种机制，它使用额外的 <a href="https://developer.mozilla.org/en-US/docs/Glossary/HTTP" target="_blank" rel="noopener">HTTP</a> 头来告诉浏览器  让运行在一个 origin (domain) 上的Web应用被准许访问来自不同源服务器上的指定的资源。当一个资源从与该资源本身所在的服务器<strong>不同的域、协议或端口</strong>请求一个资源时，资源会发起一个<strong>跨域 HTTP 请求</strong>。</p>
 <p>跨域资源共享（ <a href="https://developer.mozilla.org/en-US/docs/Glossary/CORS" target="_blank" rel="noopener">CORS</a> ）机制允许 Web 应用服务器进行跨域访问控制，从而使跨域数据传输得以安全进行。现代浏览器支持在 API 容器中（例如 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest" target="_blank" rel="noopener"><code>XMLHttpRequest</code></a> 或 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" target="_blank" rel="noopener">Fetch</a> ）使用 CORS，以降低跨域 HTTP 请求所带来的风险。</p>
 </blockquote>
@@ -352,42 +355,56 @@
 <h2 id="0x03-OPTIONS请求优化"><a href="#0x03-OPTIONS请求优化" class="headerlink" title="0x03 OPTIONS请求优化"></a>0x03 OPTIONS请求优化</h2><p>右上可知，Access-Control-Max-Age字段用于标识预检请求的缓存时间，因此可以设置Access-Control-Max-Age为较大值来优化OPTIONS请求，在设置的时间段内，只有第一次请求是需要发送OPTIONS的，后面的请求均不需要。</p>
 <p>但是，预检请求只针对于单个URL，而不是整个域名，即对<code>http://domain/a</code>和<code>http://domain/b</code>这2个请求，均需要发送OPTIONS。</p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <div>
+      
+        
+
       
     </div>
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/cors/" rel="tag"># cors</a>
+          
+        </div>
+      
+
+      
+        
+      
 
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -395,6 +412,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -414,8 +435,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="fr1d4st">
           <p class="site-author-name" itemprop="name">fr1d4st</p>
@@ -466,6 +496,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-Web前后端分离中CORS配置及OPTIONS请求优化"><span class="nav-number">1.</span> <span class="nav-text">Java Web前后端分离中CORS配置及OPTIONS请求优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-CORS-概述"><span class="nav-number">1.1.</span> <span class="nav-text">0x00 CORS 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-SpringBoot中配置CORS"><span class="nav-number">1.2.</span> <span class="nav-text">0x02 SpringBoot中配置CORS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局配置"><span class="nav-number">1.2.1.</span> <span class="nav-text">全局配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单独配置"><span class="nav-number">1.2.2.</span> <span class="nav-text">单独配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-OPTIONS请求优化"><span class="nav-number">1.3.</span> <span class="nav-text">0x03 OPTIONS请求优化</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -593,6 +639,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
